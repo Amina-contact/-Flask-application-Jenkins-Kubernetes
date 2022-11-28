@@ -39,6 +39,53 @@ CMD ["python", "app.py"]
 <li>Build the docker image</strong>:<code>docker build -t flask-app .</code></li><br>
 <img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/9.JPG">
 <li>Run the application using docker image</strong>:<code>docker run -it -p 5000:5000 flask-app</code></li><br>
-<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/10.JPG">
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/10.JPG"><br>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/11.JPG">
 <li>Run test</strong>:<code>docker run -it flask-app pytest test.py</code></li><br>
-<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/10.JPG">
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/12.JPG">
+<h2>4. Create a Jenkins pipeline</h2>
+<li>Create a Jenkins pipeline which will help in building, testing and deploying the application</strong>:</li><br>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/13.JPG">
+<li>Write a pipeline script in Groovy for building, testing and deploying code</strong>:</li><br>
+<pre class="notranslate"><code>
+pipeline {
+   agent any
+  
+   environment {
+       DOCKER_HUB_REPO = "dahmouniamina/flask"
+       CONTAINER_NAME = "flask"
+ 
+   }
+  
+   stages {
+       stage('Checkout') {
+           steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes']]])
+           }
+       }
+       stage('Build') {
+           steps {
+               echo 'Building..'
+               sh 'docker image build -t $DOCKER_HUB_REPO:latest .'
+           }
+       }
+       stage('Test') {
+           steps {
+               echo 'Testing..'
+               sh 'docker stop $CONTAINER_NAME || true'
+               sh 'docker rm $CONTAINER_NAME || true'
+               sh 'docker run --name $CONTAINER_NAME $DOCKER_HUB_REPO /bin/bash -c "pytest && test.py"'
+           }
+       }
+       stage('Deploy') {
+           steps {
+               echo 'Deploying....'
+               sh 'docker stop $CONTAINER_NAME || true'
+               sh 'docker rm $CONTAINER_NAME || true'
+               sh 'docker run -d -p 5000:5000 --name $CONTAINER_NAME $DOCKER_HUB_REPO'
+           }
+       }
+   }
+}
+</code></pre>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/13.JPG">
