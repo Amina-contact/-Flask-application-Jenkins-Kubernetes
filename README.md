@@ -141,7 +141,6 @@ spec:
    tier: frontend
 </code></pre>
 <li>Test the service manually by running below commands</strong>:<code>kubectl apply -f service.yaml</code></li><br>
-<li>Run below command to access the application on the browser</strong>:<code>minikube service flask-hello-service-nodeport</code></li><br>
+<li>Run below command to access the application on the browser</strong>:<code>minikube service flask-hello-service-nodeport</code></li>
 # Conclusion
-# Prerequisites :
 In this tutorial, we have tried to build a very simple CI/CD pipeline using jenkins and kubernetes. 
