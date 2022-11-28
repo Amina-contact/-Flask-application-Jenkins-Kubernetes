@@ -88,4 +88,5 @@ pipeline {
    }
 }
 </code></pre>
-<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/13.JPG">
+
+The pipelines should start running now and you should be able to see the status of the build on the page.
