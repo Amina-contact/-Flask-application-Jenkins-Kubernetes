@@ -27,3 +27,18 @@ In this lab we are going to Build & deploy  a simple flask application using Jen
 <li>Create a new file named "test.py" and add a basic test case</strong>:</li><br>
 <img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/8.JPG">
 <li>Run the test file using pytest</strong>:<code>pytest test.py</code></li><br>
+<h2>3. Dockerise the application</h2>
+<li>Create a file named "Dockerfile" and add the below code</strong>:</li><br>
+<pre class="notranslate"><code>
+FROM python:2.7
+COPY app.py test.py /app/
+WORKDIR /app
+RUN pip install flask pytest
+CMD ["python", "app.py"]
+</code></pre>
+<li>Build the docker image</strong>:<code>docker build -t flask-app .</code></li><br>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/9.JPG">
+<li>Run the application using docker image</strong>:<code>docker run -it -p 5000:5000 flask-app</code></li><br>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/10.JPG">
+<li>Run test</strong>:<code>docker run -it flask-app pytest test.py</code></li><br>
+<img src="https://github.com/Amina-contact/-Flask-application-Jenkins-Kubernetes/blob/master/Pictures/10.JPG">
