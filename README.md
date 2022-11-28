@@ -8,7 +8,13 @@ In this lab we are going to Build & deploy  a simple flask application using Jen
  - Linux machine
  - Python
  - Flask
- # Set up virtual Python environment:
+# Project structure:
+ - app.py : Flask application which will print "Hello world"
+ - test.py : Test cases for the application
+ - Dockerfile : Contains commands to build and run the docker image
+ - deployment.yaml : Kubernetes deployment file for the application
+ - service.yaml : Kubernetes service file for the application
+# Set up virtual Python environment:
  Virtual environment is a tool that helps to keep dependencies required by different projects separate by creating isolated python virtual environments for them. 
  This is one of the most important tools that most of Python developers use.
 <li>Create the virtual environment named env</strong>:<code>py -m venv env</code></li>
