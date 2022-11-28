@@ -90,3 +90,29 @@ pipeline {
 </code></pre>
 
 The pipelines should start running now and you should be able to see the status of the build on the page.
+<h2>5. Create a Kubernetes deployment and service for the application</h2>
+<li>Start minikube cluster</strong>:<code>minikube start</code></li><br>
+<li>Create a new file named "deployment.yaml" in your project and add the below code</strong>:</li><br>
+<pre class="notranslate"><code>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: flask-hello-deployment # name of the deployment
+ 
+spec:
+ template: # pod defintion
+   metadata:
+     name: flask-hello # name of the pod
+     labels:
+       app: flask-hello
+       tier: frontend
+   spec:
+     containers:
+       - name: flask-hello
+         image: dahmouniamina/flask:latest
+ replicas: 3
+ selector: # Mandatory, Select the pods which needs to be in the replicaset
+   matchLabels:
+     app: flask-hello
+     tier: frontend
+</code></pre>
