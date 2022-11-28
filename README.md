@@ -116,3 +116,25 @@ spec:
      app: flask-hello
      tier: frontend
 </code></pre>
+<li>Test the deployment manually by running the following command</strong>:<code>kubectl apply -f deployment.yaml</code></li><br>
+<li>Create a new file named "service.yaml" and add the following code</strong>:</li><br>
+<pre class="notranslate"><code>
+apiVersion: v1
+kind: Service
+metadata:
+ name: flask-hello-service-nodeport # name of the service
+ 
+spec:
+ type: NodePort # Used for accessing a port externally
+ ports:
+   - port: 5000 # Service port
+     targetPort: 5000 # Pod port, default: same as port
+     nodePort: 30008 # Node port which can be used externally, default: auto-assign any free port
+ selector: # Which pods to expose externally ?
+   app: flask-hello
+   tier: frontend
+</code></pre>
+<li>Test the service manually by running below commands</strong>:<code>kubectl apply -f service.yaml</code></li><br>
+<li>Run below command to access the application on the browser</strong>:<code>minikube service flask-hello-service-nodeport</code></li><br>
+# Conclusion
+In this tutorial, we have tried to build a very simple CI/CD pipeline using jenkins and kubernetes. 
